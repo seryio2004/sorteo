@@ -112,9 +112,17 @@ h1 em {
   font-weight: inherit;
 }
 
+.hero__intro {
+  max-width: 620px;
+  margin: 25px auto 0;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.65;
+}
+
 .hero__lead {
   min-height: 1.35em;
-  margin: 16px 0 0;
+  margin: 12px 0 0;
   color: var(--muted);
   font-size: .88rem;
 }
@@ -381,6 +389,7 @@ h1 em {
   .page-shell { width: min(100% - 24px, 480px); padding-top: 16px; }
   .hero { padding: 70px 0 48px; }
   h1 { font-size: clamp(3.2rem, 16vw, 4.7rem); }
+  .hero__intro { margin-top: 21px; font-size: .86rem; line-height: 1.6; }
   .draw-meta { gap: 15px; margin-top: 29px; }
   .draw-meta > div { padding-right: 15px; }
   .draw-meta p { max-width: 135px; font-size: .71rem; }

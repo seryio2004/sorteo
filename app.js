@@ -156,7 +156,7 @@ function renderState() {
   const closesAt = state.registration_closes_at ? new Date(state.registration_closes_at) : null;
   const drawAt = state.draw_at ? new Date(state.draw_at) : null;
 
-  document.title = "Botella de Licorca";
+  document.title = "Win a bottle of homemade Licorca";
 
   els.participantsCount.textContent = state.entries_count ?? 0;
   els.drawDate.textContent = drawAt ? formatDateTime(drawAt) : "Fecha sin configurar";
