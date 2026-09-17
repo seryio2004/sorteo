@@ -2,7 +2,6 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "./config.js";
 
 const els = {
-  brandTitle: document.querySelector("#brandTitle"),
   raffleTitle: document.querySelector("#raffleTitle"),
   heroMessage: document.querySelector("#heroMessage"),
   statusPill: document.querySelector("#statusPill"),
@@ -156,9 +155,7 @@ function renderState() {
   const closesAt = state.registration_closes_at ? new Date(state.registration_closes_at) : null;
   const drawAt = state.draw_at ? new Date(state.draw_at) : null;
 
-  els.brandTitle.textContent = state.title?.toUpperCase() || "SORTEO";
-  els.raffleTitle.textContent = state.title || "Sorteo";
-  document.title = state.title ? `${state.title} · Sorteo` : "Sorteo";
+  document.title = "Botella de Licorca";
 
   els.participantsCount.textContent = state.entries_count ?? 0;
   els.drawDate.textContent = drawAt ? formatDateTime(drawAt) : "Fecha sin configurar";
@@ -174,7 +171,7 @@ function renderState() {
     els.registrationStatus.textContent = "Cerrada";
     els.winnerName.textContent = state.winner_name;
     els.winnerSection.classList.remove("winner-panel--hidden");
-    els.heroMessage.textContent = "El sorteo ha finalizado. El resultado ya está publicado.";
+    els.heroMessage.textContent = "Resultado listo.";
   } else {
     els.winnerSection.classList.add("winner-panel--hidden");
 
@@ -182,19 +179,17 @@ function renderState() {
       els.statusPill.textContent = "Próximamente";
       els.statusPill.dataset.state = "closed";
       els.registrationStatus.textContent = `Abre ${formatDateTime(opensAt)}`;
-      els.heroMessage.textContent = "La inscripción todavía no está abierta.";
+      els.heroMessage.textContent = "Próximamente.";
     } else if (isOpen) {
       els.statusPill.textContent = "Inscripción abierta";
       els.statusPill.dataset.state = "open";
       els.registrationStatus.textContent = closesAt ? `Hasta ${formatTime(closesAt)}` : "Abierta";
-      els.heroMessage.textContent = "Escanea el QR, registra tu nombre y conserva esta página abierta para ver el resultado.";
+      els.heroMessage.textContent = "";
     } else if (isClosed || (drawAt && now >= drawAt)) {
       els.statusPill.textContent = "Inscripción cerrada";
       els.statusPill.dataset.state = "closed";
       els.registrationStatus.textContent = "Cerrada";
-      els.heroMessage.textContent = drawAt && now < drawAt
-        ? "Las inscripciones están cerradas. El sorteo se realizará a la hora indicada."
-        : "El sorteo está procesando el resultado.";
+      els.heroMessage.textContent = drawAt && now < drawAt ? "Inscripción cerrada." : "Sorteando.";
     }
   }
 
@@ -211,11 +206,11 @@ function renderState() {
     els.nameInput.disabled = true;
   }
 
-  els.lastUpdate.textContent = `Actualizado ${new Intl.DateTimeFormat("es-ES", {
+  els.lastUpdate.textContent = new Intl.DateTimeFormat("es-ES", {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-  }).format(new Date())}`;
+  }).format(new Date());
 
   updateCountdown();
 }
@@ -224,8 +219,7 @@ async function loadState() {
   if (!client) {
     els.statusPill.textContent = "Falta configurar Supabase";
     els.statusPill.dataset.state = "closed";
-    els.raffleTitle.textContent = "Configura el proyecto";
-    els.heroMessage.textContent = "Edita config.js con la URL y la publishable key de Supabase.";
+    els.heroMessage.textContent = "Sin conexión.";
     els.submitButton.disabled = true;
     els.participantsCount.textContent = "—";
     return;
@@ -271,7 +265,7 @@ els.entryForm.addEventListener("submit", async (event) => {
 
   els.submitButton.disabled = true;
   els.nameInput.disabled = true;
-  setFormMessage("Registrando papeleta…");
+  setFormMessage("Entrando…");
 
   const { data, error } = await client.rpc("register_entry", {
     p_name: name,
@@ -289,7 +283,7 @@ els.entryForm.addEventListener("submit", async (event) => {
   const savedName = data?.name || name;
   saveStoredName(savedName);
   setRegisteredUI(savedName);
-  setFormMessage("Papeleta registrada.", "success");
+  setFormMessage("", "success");
   await loadState();
 });
 

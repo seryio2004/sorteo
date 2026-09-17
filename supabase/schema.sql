@@ -7,7 +7,7 @@ create extension if not exists pgcrypto;
 
 create table if not exists public.raffle_settings (
   id smallint primary key default 1 check (id = 1),
-  title text not null default 'Sorteo',
+  title text not null default 'Botella de Licorca',
   registration_opens_at timestamptz,
   registration_closes_at timestamptz not null,
   draw_at timestamptz not null,
@@ -66,7 +66,7 @@ begin
 
   if not found then
     return jsonb_build_object(
-      'title', 'Sorteo',
+      'title', 'Botella de Licorca',
       'registration_opens_at', null,
       'registration_closes_at', null,
       'draw_at', null,
@@ -265,7 +265,7 @@ insert into public.raffle_settings (
 )
 values (
   1,
-  'Sorteo del evento',
+  'Botella de Licorca',
   '2026-09-17 09:00:00+02',
   '2026-09-17 19:55:00+02',
   '2026-09-17 20:00:00+02'
