@@ -26,20 +26,12 @@
           <p id="drawDate">—</p>
         </div>
       </div>
-
-      <div class="bottle-stage" aria-label="Una botella de Licorca">
-        <div class="halo"></div>
-        <div class="bottle" aria-hidden="true">
-          <span class="bottle__cap"></span><span class="bottle__neck"></span>
-          <span class="bottle__body"><span class="bottle__shine"></span><span class="bottle__label">LICORCA<small>LICOR DE CAFÉ</small></span></span>
-        </div>
-      </div>
     </section>
 
     <section class="entry-card">
       <form id="entryForm" class="entry-form" novalidate>
         <label class="sr-only" for="nameInput">Nombre</label>
-        <input id="nameInput" name="name" type="text" minlength="2" maxlength="60" autocomplete="name" placeholder="Tu nombre" required />
+        <input id="nameInput" name="name" type="text" minlength="2" maxlength="60" autocomplete="name" autocapitalize="words" aria-describedby="formMessage" placeholder="Tu nombre" required />
         <button id="submitButton" class="button" type="submit">Participar</button>
         <p id="formMessage" class="form-message" role="status"></p>
       </form>

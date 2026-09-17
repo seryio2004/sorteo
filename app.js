@@ -2,7 +2,6 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "./config.js";
 
 const els = {
-  raffleTitle: document.querySelector("#raffleTitle"),
   heroMessage: document.querySelector("#heroMessage"),
   statusPill: document.querySelector("#statusPill"),
   countdown: document.querySelector("#countdown"),
@@ -80,10 +79,12 @@ function formatTime(value) {
 function setFormMessage(message = "", kind = "") {
   els.formMessage.textContent = message;
   els.formMessage.dataset.state = kind;
+  els.nameInput.setAttribute("aria-invalid", String(kind === "error"));
 }
 
 function setRegisteredUI(name) {
   els.entryForm.hidden = true;
+  els.entryForm.removeAttribute("aria-busy");
   els.registeredName.textContent = name;
   els.registeredTicket.classList.remove("ticket--hidden");
 }
@@ -260,11 +261,13 @@ els.entryForm.addEventListener("submit", async (event) => {
 
   if (name.length < 2 || name.length > 60) {
     setFormMessage("Introduce un nombre de entre 2 y 60 caracteres.", "error");
+    els.nameInput.focus();
     return;
   }
 
   els.submitButton.disabled = true;
   els.nameInput.disabled = true;
+  els.entryForm.setAttribute("aria-busy", "true");
   setFormMessage("Entrando…");
 
   const { data, error } = await client.rpc("register_entry", {
@@ -277,6 +280,7 @@ els.entryForm.addEventListener("submit", async (event) => {
     setFormMessage(error.message || "No se ha podido registrar la papeleta.", "error");
     els.submitButton.disabled = false;
     els.nameInput.disabled = false;
+    els.entryForm.removeAttribute("aria-busy");
     return;
   }
 
@@ -285,6 +289,12 @@ els.entryForm.addEventListener("submit", async (event) => {
   setRegisteredUI(savedName);
   setFormMessage("", "success");
   await loadState();
+});
+
+els.nameInput.addEventListener("input", () => {
+  if (els.formMessage.dataset.state === "error") {
+    setFormMessage();
+  }
 });
 
 els.openQrButton.addEventListener("click", () => {
