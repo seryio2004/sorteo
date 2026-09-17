@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#17121f" />
+  <meta name="description" content="Sorteo con inscripción mediante QR y una papeleta por participante." />
+  <title>Sorteo</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="ambient ambient--one"></div>
+  <div class="ambient ambient--two"></div>
+
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Inicio">
+        <span class="brand__mark">◆</span>
+        <span id="brandTitle">SORTEO</span>
+      </a>
+
+      <button id="openQrButton" class="button button--ghost" type="button">
+        <span class="button__icon">⌁</span>
+        Mostrar QR
+      </button>
+    </header>
+
+    <section class="hero">
+      <div class="hero__copy">
+        <span id="statusPill" class="status-pill">Cargando…</span>
+        <p class="eyebrow">UNA PERSONA · UNA PAPELETA</p>
+        <h1 id="raffleTitle">Sorteo</h1>
+        <p id="heroMessage" class="hero__lead">
+          Escanea el QR, registra tu nombre y conserva esta página abierta para ver el resultado.
+        </p>
+      </div>
+
+      <section class="countdown-card" aria-live="polite">
+        <div>
+          <p class="countdown-card__label">Sorteo en</p>
+          <div id="countdown" class="countdown">--:--:--</div>
+        </div>
+        <p id="drawDate" class="countdown-card__date">Consultando fecha…</p>
+      </section>
+    </section>
+
+    <section class="grid">
+      <article class="panel panel--form">
+        <div class="panel__header">
+          <div>
+            <p class="eyebrow">01 / PARTICIPAR</p>
+            <h2>Introduce tu nombre</h2>
+          </div>
+          <span class="ticket-icon" aria-hidden="true">✦</span>
+        </div>
+
+        <form id="entryForm" class="entry-form" novalidate>
+          <label for="nameInput">Nombre</label>
+          <div class="entry-form__row">
+            <input
+              id="nameInput"
+              name="name"
+              type="text"
+              minlength="2"
+              maxlength="60"
+              autocomplete="name"
+              placeholder="Tu nombre"
+              required
+            />
+            <button id="submitButton" class="button button--primary" type="submit">
+              Añadirme
+            </button>
+          </div>
+          <p class="form-hint">Los nombres no distinguen entre mayúsculas y minúsculas.</p>
+          <p id="formMessage" class="form-message" role="status"></p>
+        </form>
+
+        <div id="registeredTicket" class="ticket ticket--hidden" aria-live="polite">
+          <div class="ticket__main">
+            <p class="ticket__label">PAPELETA REGISTRADA</p>
+            <strong id="registeredName">—</strong>
+            <p>Tu participación ya está guardada.</p>
+          </div>
+          <div class="ticket__stub">
+            <span>OK</span>
+          </div>
+        </div>
+      </article>
+
+      <aside class="panel stats-panel">
+        <p class="eyebrow">02 / ESTADO</p>
+
+        <div class="stat">
+          <span class="stat__value" id="participantsCount">—</span>
+          <span class="stat__label">participantes</span>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="schedule">
+          <div>
+            <span>Inscripción</span>
+            <strong id="registrationStatus">—</strong>
+          </div>
+          <div>
+            <span>Hora del sorteo</span>
+            <strong id="drawTime">—</strong>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="winnerSection" class="winner-panel winner-panel--hidden" aria-live="assertive">
+      <p class="eyebrow">03 / RESULTADO</p>
+      <div class="winner-panel__content">
+        <span class="winner-panel__spark">✦</span>
+        <p>La persona ganadora es</p>
+        <h2 id="winnerName">—</h2>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>El resultado se decide en la base de datos, no en el navegador.</span>
+      <span id="lastUpdate">—</span>
+    </footer>
+  </main>
+
+  <dialog id="qrDialog" class="qr-dialog">
+    <form method="dialog" class="qr-dialog__inner">
+      <button class="qr-dialog__close" aria-label="Cerrar">×</button>
+      <p class="eyebrow">COMPARTIR</p>
+      <h2>Escanea para participar</h2>
+      <div id="qrCode" class="qr-code"></div>
+      <p id="qrUrl" class="qr-url"></p>
+      <button class="button button--primary button--full" value="close">Cerrar</button>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
