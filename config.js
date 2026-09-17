@@ -2,5 +2,5 @@
 // Supabase > Project Settings > API:
 //   - Project URL
 //   - Publishable key (o anon key en proyectos antiguos)
-export const SUPABASE_URL = "https://TU-PROYECTO.supabase.co";
-export const SUPABASE_PUBLISHABLE_KEY = "TU_PUBLISHABLE_KEY";
+export const SUPABASE_URL = "https://lrmsdpdnpgtzbqnvvhva.supabase.co";
+export const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_pRTAlirsDmXICfIPXCMIqA_WaH049tU";
